@@ -67,7 +67,7 @@ public class SimpleArrayList<T> implements List<T> {
             @Override
             public boolean hasNext() {
                 if (expectedModCount != modCount) {
-                    throw new NoSuchElementException();
+                    throw new ConcurrentModificationException();
                 }
                 return pointer < size;
             }

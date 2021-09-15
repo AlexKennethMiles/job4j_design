@@ -1,10 +1,12 @@
 package ru.job4j.collection;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class ForwardLinked<T> implements Iterable<T> {
     private Node<T> head;
+    private int modCount;
 
     public void add(T value) {
         Node<T> node = new Node<T>(value, null);
@@ -17,16 +19,38 @@ public class ForwardLinked<T> implements Iterable<T> {
             tail = tail.next;
         }
         tail.next = node;
+        modCount++;
     }
 
     public T deleteFirst() {
         if (head != null) {
+            Node<T> deletedNode = head;
             if (head.next == null) {
                 head = null;
             } else {
-                Node<T> deletedNode = head;
                 head = head.next;
-                return deletedNode.value;
+            }
+            modCount++;
+            return deletedNode.value;
+        }
+        throw new NoSuchElementException();
+    }
+
+    public T deleteLast() {
+        if (head != null) {
+            Node<T> currentNode = head;
+            if (head.next == null) {
+                head = null;
+                modCount++;
+                return currentNode.value;
+            } else {
+                while (currentNode.next.next != null) {
+                    currentNode = currentNode.next;
+                }
+                T deletedValue = currentNode.next.value;
+                currentNode.next = null;
+                modCount++;
+                return deletedValue;
             }
         }
         throw new NoSuchElementException();
@@ -36,15 +60,21 @@ public class ForwardLinked<T> implements Iterable<T> {
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             Node<T> node = head;
+            int expectedModCount = modCount;
 
             @Override
             public boolean hasNext() {
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
                 return node != null;
             }
 
             @Override
             public T next() {
-                if (!hasNext()) {
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                } else if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
                 T value = node.value;
