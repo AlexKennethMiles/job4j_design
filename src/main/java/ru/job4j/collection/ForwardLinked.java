@@ -38,7 +38,9 @@ public class ForwardLinked<T> implements Iterable<T> {
         if (head.next == null) {
             head = null;
         } else {
-            head = head.next;
+            Node<T> nextNode = head.next;
+            head.next = null;
+            head = nextNode;
         }
         modCount++;
         return deletedNode.value;
