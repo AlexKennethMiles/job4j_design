@@ -40,9 +40,9 @@ public class ForwardLinkedTest {
         linked.add(1);
         linked.add(2);
         linked.add(3);
-        assertThat(linked.deleteLast(), is(3));
-        assertThat(linked.deleteLast(), is(2));
-        assertThat(linked.deleteLast(), is(1));
+        assertThat(linked.deleteFirst(), is(1));
+        assertThat(linked.deleteFirst(), is(2));
+        assertThat(linked.deleteFirst(), is(3));
     }
 
     @Test(expected = ConcurrentModificationException.class)
@@ -51,11 +51,11 @@ public class ForwardLinkedTest {
         linked.add(1);
         linked.add(2);
         linked.add(3);
-        assertThat(linked.deleteLast(), is(3));
+        assertThat(linked.deleteFirst(), is(1));
         Iterator<Integer> it = linked.iterator();
-        assertThat(it.next(), is(1));
-        assertThat(linked.deleteLast(), is(2));
-        assertThat(linked.deleteLast(), is(1));
+        assertThat(it.next(), is(2));
+        assertThat(linked.deleteFirst(), is(2));
+        assertThat(linked.deleteFirst(), is(3));
         assertThat(it.hasNext(), is(false));
     }
 }
