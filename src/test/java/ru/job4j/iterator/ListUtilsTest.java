@@ -75,11 +75,27 @@ public class ListUtilsTest {
     }
 
     @Test
-    public void whenRemoveAllEmpty() {
+    public void whenRemoveAllFirstEmpty() {
         List<Integer> first = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
         List<Integer> second = new ArrayList<>(Arrays.asList());
         ListUtils.removeAll(first, second);
         assertThat(first, is(Arrays.asList(1, 2, 3, 4)));
+    }
+
+    @Test
+    public void whenRemoveAllSecondEmpty() {
+        List<Integer> first = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+        List<Integer> second = new ArrayList<>(Arrays.asList());
+        ListUtils.removeAll(first, second);
+        assertThat(first, is(Arrays.asList(1, 2, 3, 4)));
+    }
+
+    @Test
+    public void whenRemoveAllButBothEmpty() {
+        List<Integer> first = new ArrayList<>(Arrays.asList());
+        List<Integer> second = new ArrayList<>(Arrays.asList());
+        ListUtils.removeAll(first, second);
+        assertThat(first, is(Arrays.asList()));
     }
 
     @Test
