@@ -89,4 +89,12 @@ public class ListUtilsTest {
         ListUtils.removeAll(first, second);
         assertThat(first, is(Arrays.asList(1, 2, 3)));
     }
+
+    @Test
+    public void whenRemoveAllTwoOne() {
+        List<Integer> first = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+        List<Integer> second = new ArrayList<>(Arrays.asList(1, 1));
+        ListUtils.removeAll(first, second);
+        assertThat(first, is(Arrays.asList(2, 3, 4)));
+    }
 }

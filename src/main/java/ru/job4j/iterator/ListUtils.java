@@ -6,30 +6,20 @@ import java.util.function.Predicate;
 public class ListUtils {
     public static <T> void addBefore(List<T> list, int index, T value) {
         Objects.checkIndex(index, list.size());
-        ListIterator<T> i = list.listIterator();
-        while (i.hasNext()) {
-            if (i.nextIndex() == index) {
-                i.add(value);
-                break;
-            }
-            i.next();
+        ListIterator<T> i = list.listIterator(index);
+        if (i.nextIndex() == index) {
+            i.add(value);
         }
+
     }
 
     public static <T> void addAfter(List<T> list, int index, T value) {
         Objects.checkIndex(index, list.size());
-        ListIterator<T> i = list.listIterator();
-        if (index == list.size() - 1) {
-            list.add(value);
-        } else {
-            while (i.hasNext()) {
-                if (i.previousIndex() == index) {
-                    i.add(value);
-                    break;
-                }
-                i.next();
-            }
+        ListIterator<T> i = list.listIterator(index);
+        if (i.hasNext()) {
+            i.next();
         }
+        i.add(value);
     }
 
     public static <T> void removeIf(List<T> list, Predicate<T> filter) {
@@ -57,11 +47,11 @@ public class ListUtils {
         }
         ListIterator<T> firstI = list.listIterator();
         while (firstI.hasNext()) {
-            ListIterator<T> secondI = elements.listIterator();
             T elFI = firstI.next();
-            while (secondI.hasNext()) {
-                if (elFI.equals(secondI.next())) {
+            for (T element : elements) {
+                if (elFI.equals(element)) {
                     firstI.remove();
+                    break;
                 }
             }
         }
