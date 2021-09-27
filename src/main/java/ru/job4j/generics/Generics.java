@@ -13,20 +13,15 @@ public class Generics {
         first.add(new Animal());
         second.add(new Predator());
         third.add(new Tiger());
-        // First ERROR corrected
         gen.printObject(first);
         gen.printObject(second);
         gen.printObject(third);
         System.out.println();
-        // Second ERROR corrected
-//        gen.printBoundedWildCard(first);
         gen.printBoundedWildCard(second);
         gen.printBoundedWildCard(third);
         System.out.println();
-        // Third ERROR corrected
         gen.printLowerBoundedWildCard(first);
         gen.printLowerBoundedWildCard(second);
-//        gen.printLowerBoundedWildCard(third);
     }
 
     public void printObject(List<?> list) {
