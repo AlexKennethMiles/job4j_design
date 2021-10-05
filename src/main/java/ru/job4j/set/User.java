@@ -37,16 +37,17 @@ public class User {
                 2,
                 new GregorianCalendar(1988, Calendar.MARCH, 10)
         );
-        User second = new User("Thomas",
-                2,
-                new GregorianCalendar(1988, Calendar.MARCH, 10)
-        );
+        User second = first;
         Map<User, Object> map = new HashMap<>();
         map.put(first, new Object());
-        System.out.println(first);
         System.out.println(map);
         map.put(second, new Object());
-        System.out.println(second);
         System.out.println(map);
+        System.out.println(first);
+        System.out.println(second);
+        System.out.println(first == second);
+        int a = -12;
+        int b = a >>> 1;
+        System.out.println(b);
     }
 }
