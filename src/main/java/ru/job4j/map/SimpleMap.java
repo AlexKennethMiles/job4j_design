@@ -16,21 +16,13 @@ public class SimpleMap<K, V> implements Map<K, V> {
         }
         int index = indexFor(hash(Objects.hash(key)));
         if (table[index] != null) {
-            if (indexFor(hash(Objects.hash(table[index].key))) == index) {
-                if (table[index].key.equals(key)) {
-                    table[index].value = value;
-                    count++;
-                    modCount++;
-                    return true;
-                }
-            }
+            return false;
         } else {
             table[index] = new MapEntry<K, V>(key, value);
             count++;
             modCount++;
             return true;
         }
-        return false;
     }
 
     private int hash(int hashCode) {
@@ -72,8 +64,6 @@ public class SimpleMap<K, V> implements Map<K, V> {
         if (table[index] != null) {
             if (indexFor(hash(Objects.hash(table[index].key))) == index) {
                 if (table[index].key.equals(key)) {
-                    table[index].key = null;
-                    table[index].value = null;
                     table[index] = null;
                     count--;
                     modCount++;

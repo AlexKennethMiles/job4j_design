@@ -32,12 +32,24 @@ public class User {
         return Objects.hash(name, children, birthday);
     }
 
+    @Override
+    public String toString() {
+        return "User{"
+                + "name='" + name + '\''
+                + ", children=" + children
+                + ", birthday=" + birthday
+                + '}';
+    }
+
     public static void main(String[] args) {
         User first = new User("Thomas",
                 2,
                 new GregorianCalendar(1988, Calendar.MARCH, 10)
         );
-        User second = first;
+        User second = new User("Thomas",
+                2,
+                new GregorianCalendar(1988, Calendar.MARCH, 10)
+        );
         Map<User, Object> map = new HashMap<>();
         map.put(first, new Object());
         System.out.println(map);

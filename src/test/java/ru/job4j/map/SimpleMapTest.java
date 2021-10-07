@@ -23,16 +23,16 @@ public class SimpleMapTest {
         SimpleMap<Integer, Integer> map = new SimpleMap<>();
         assertThat(map.put(1, 2), is(true));
         assertThat(map.get(1), is(2));
-        assertThat(map.put(1, 2), is(true));
+        assertThat(map.put(1, 2), is(false));
     }
 
     @Test
-    public void whenPutAndRewrite() {
+    public void whenPutAndTryToRewrite() {
         SimpleMap<Integer, Integer> map = new SimpleMap<>();
         assertThat(map.put(1, 2), is(true));
         assertThat(map.get(1), is(2));
-        assertThat(map.put(1, 3), is(true));
-        assertThat(map.get(1), is(3));
+        assertThat(map.put(1, 3), is(false));
+        assertThat(map.get(1), is(2));
     }
 
     @Test
