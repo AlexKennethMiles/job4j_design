@@ -27,8 +27,22 @@ public class ConfigTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenThrowsAnException() {
-        String path = "./data/key_value_pairs_with_errors.properties";
+    public void whenThePairIsWithoutAKey() {
+        String path = "./data/keyless_pair.properties";
+        Config config = new Config(path);
+        config.load();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenAPairWithTwoEqualSigns() {
+        String path = "./data/pair_with_two_equal_signs.properties";
+        Config config = new Config(path);
+        config.load();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenAPairIsWithoutAnEqualSign() {
+        String path = "./data/pair_without_an_equal_sign.properties";
         Config config = new Config(path);
         config.load();
     }
