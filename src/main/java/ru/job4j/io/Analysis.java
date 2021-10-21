@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Analysis {
-    public void unavailable(String source, String target) {
+    public static void unavailable(String source, String target) {
         try (BufferedReader in = new BufferedReader(new FileReader(source));
              BufferedWriter out = new BufferedWriter(new FileWriter(target))) {
             Map<String, String> map = new LinkedHashMap<>();
@@ -33,6 +33,7 @@ public class Analysis {
                 out.write(entry.getKey()
                         + ";"
                         + entry.getValue()
+                        + ";"
                         + System.lineSeparator());
             }
         } catch (IOException e) {
@@ -43,7 +44,6 @@ public class Analysis {
     public static void main(String[] args) {
         String pathFrom = "./data/server.log";
         String pathTo = "./data/periods_of_idleness_server.csv";
-        Analysis analysis = new Analysis();
-        analysis.unavailable(pathFrom, pathTo);
+        unavailable(pathFrom, pathTo);
     }
 }
