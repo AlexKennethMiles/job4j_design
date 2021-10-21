@@ -19,7 +19,7 @@ public class SearchFiles extends SimpleFileVisitor<Path> {
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        if (condition.test((Path) paths)) {
+        if (condition.test(file)) {
             paths.add(file);
             return FileVisitResult.CONTINUE;
         }

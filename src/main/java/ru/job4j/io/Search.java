@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 public class Search {
     public static void main(String[] args) throws IOException {
         Path start = Paths.get(".");
-        Predicate<Path> predicate = p -> p.toFile().getName().endsWith(".jar");
+        Predicate<Path> predicate = p -> p.toFile().getName().endsWith(".java");
         search(start, predicate).forEach(System.out::println);
     }
 
