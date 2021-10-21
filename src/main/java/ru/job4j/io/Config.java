@@ -27,7 +27,8 @@ public class Config {
                 String value = line.substring(cursor + 1);
                 if (key.isEmpty()
                         || key.contains("=")
-                        || value.contains("=")) {
+                        || value.contains("=")
+                        || value.isEmpty()) {
                     throw new IllegalArgumentException();
                 }
                 values.put(key, value);

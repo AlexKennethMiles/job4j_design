@@ -46,4 +46,11 @@ public class ConfigTest {
         Config config = new Config(path);
         config.load();
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenAPairIsWithoutValue() {
+        String path = "./data/pair_without_value.properties";
+        Config config = new Config(path);
+        config.load();
+    }
 }
