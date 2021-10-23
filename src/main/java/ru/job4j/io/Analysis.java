@@ -1,44 +1,40 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class Analysis {
     public static void unavailable(String source, String target) {
-        try (BufferedReader in = new BufferedReader(new FileReader(source));
-             BufferedWriter out = new BufferedWriter(new FileWriter(target))) {
-            Map<String, String> map = new LinkedHashMap<>();
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(target))) {
+            StringBuilder rsl = analysisAndRecording(source);
+            out.write(rsl.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static StringBuilder analysisAndRecording(String source) {
+        StringBuilder timePeriod = new StringBuilder();
+        try (BufferedReader in = new BufferedReader(new FileReader(source))) {
             String[] buf;
-            String key = null;
             boolean flag = false;
             for (String read = in.readLine(); read != null; read = in.readLine()) {
                 buf = read.split(" ");
                 if (buf[0].equals("400") || buf[0].equals("500")) {
                     if (!flag) {
-                        key = buf[1];
-                        map.put(key, key);
+                        timePeriod.append(buf[1]).append(";");
                         flag = true;
-                    } else {
-                        map.put(key, buf[1]);
                     }
                 } else {
                     if (flag) {
-                        map.put(key, buf[1]);
+                        timePeriod.append(buf[1]).append(";").append(System.lineSeparator());
                         flag = false;
                     }
                 }
             }
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                out.write(entry.getKey()
-                        + ";"
-                        + entry.getValue()
-                        + ";"
-                        + System.lineSeparator());
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return timePeriod;
     }
 
     public static void main(String[] args) {
