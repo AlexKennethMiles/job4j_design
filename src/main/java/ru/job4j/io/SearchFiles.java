@@ -21,9 +21,8 @@ public class SearchFiles extends SimpleFileVisitor<Path> {
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         if (condition.test(file)) {
             paths.add(file);
-            return FileVisitResult.CONTINUE;
         }
-        return FileVisitResult.SKIP_SUBTREE;
+        return FileVisitResult.CONTINUE;
     }
 
     public List<Path> getPaths() {
