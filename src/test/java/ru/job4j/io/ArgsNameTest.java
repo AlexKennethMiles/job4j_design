@@ -31,11 +31,11 @@ public class ArgsNameTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenWrongKey() {
-        ArgsName jvm = ArgsName.of(new String[]{"enconding=UTF-8",});
+        ArgsName jvm = ArgsName.of(new String[]{"enconding=UTF-8"});
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenIncorrectKey() {
-        ArgsName jvm = ArgsName.of(new String[]{"--enconding=UTF-8",});
+        ArgsName jvm = ArgsName.of(new String[]{"--enconding=UTF-8"});
     }
 }
