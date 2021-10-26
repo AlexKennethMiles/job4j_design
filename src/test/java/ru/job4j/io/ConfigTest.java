@@ -12,8 +12,8 @@ public class ConfigTest {
         String path = "./data/pairs_without_comments.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("name"), is("postgres"));
-        assertThat(config.value("surname"), is(nullValue()));
+        assertThat(config.value("hibernate.connection.username"), is("postgres"));
+        assertThat(config.value("hibernate.connection.surname"), is(nullValue()));
     }
 
     @Test
@@ -22,7 +22,7 @@ public class ConfigTest {
         Config config = new Config(path);
         config.load();
         assertThat(config.value("hibernate.connection.driver_class"), is("org.postgresql.Driver"));
-        assertThat(config.value("dialect"), is("org.hibernate.dialect.PostgreSQLDialect"));
+        assertThat(config.value("hibernate.dialect"), is("org.hibernate.dialect.PostgreSQLDialect"));
         assertThat(config.value("comment"), is(nullValue()));
     }
 

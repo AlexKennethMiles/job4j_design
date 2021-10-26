@@ -39,12 +39,7 @@ public class Config {
     }
 
     public String value(String key) {
-        for (Map.Entry<String, String> entry : values.entrySet()) {
-            if (entry.getKey().contains(key)) {
-                return entry.getValue();
-            }
-        }
-        return null;
+        return values.get(key);
     }
 
     @Override
