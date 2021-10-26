@@ -12,12 +12,12 @@ public class ArgsName {
 
     public void parse(String[] args) {
         if (args.length == 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Empty key value pair. Usage -key=value.");
         }
         for (String arg : args) {
             int cursor = arg.indexOf("=");
             if (cursor == -1 || !arg.startsWith("-")) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Invalid key value pair. Usage -key=value.");
             }
             String key = arg.substring(1, cursor);
             String value = arg.substring(cursor + 1);
@@ -26,7 +26,7 @@ public class ArgsName {
                     || key.contains("=")
                     || value.contains("=")
                     || value.isEmpty()) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Invalid key value pair. Usage -key=value.");
             }
             values.put(key, value);
         }
