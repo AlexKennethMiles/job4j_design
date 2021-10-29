@@ -8,9 +8,15 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class Search {
+
     public static void main(String[] args) throws IOException {
-        Path start = Paths.get(".");
-        Predicate<Path> predicate = p -> p.toFile().getName().endsWith(".java");
+        if (args.length != 5) {
+            throw new IllegalArgumentException(
+                    "Incorrect set of program arguments. "
+                            + "Usage java -jar target\\searchFiles.jar ROOT_PATH FILE_EXTENSION");
+        }
+        Path start = Paths.get(args[3]);
+        Predicate<Path> predicate = p -> p.toFile().getName().endsWith(args[4]);
         search(start, predicate).forEach(System.out::println);
     }
 
