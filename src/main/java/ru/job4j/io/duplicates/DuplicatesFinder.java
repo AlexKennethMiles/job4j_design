@@ -12,7 +12,7 @@ public class DuplicatesFinder {
     public static void main(String[] args) throws IOException {
         Path start = Paths.get(".");
         DuplicatesVisitor search = new DuplicatesVisitor();
-        System.out.println(finDuplicates(start, search));
+        finDuplicates(start, search).forEach(System.out::println);
     }
 
     public static List<List<String>> finDuplicates(Path start, DuplicatesVisitor search) throws IOException {
