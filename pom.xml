@@ -80,20 +80,13 @@
           </execution>
         </executions>
       </plugin>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-                <source>15</source>
-                <target>15</target>
-            </configuration>
-        </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <version>3.0.0</version>
         <executions>
           <execution>
+            <id>duplicatesFinder</id>
             <phase>package</phase>
             <goals>
               <goal>shade</goal>
@@ -103,6 +96,21 @@
               <transformers>
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                   <mainClass>ru.job4j.io.duplicates.DuplicatesFinder</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+          <execution>
+            <id>searchFiles</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <finalName>searchFiles</finalName>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>ru.job4j.io.Search</mainClass>
                 </transformer>
               </transformers>
             </configuration>
