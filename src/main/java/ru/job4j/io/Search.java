@@ -8,13 +8,8 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class Search {
-
     public static void main(String[] args) throws IOException {
-        if (args.length != 5) {
-            throw new IllegalArgumentException(
-                    "Incorrect set of program arguments. "
-                            + "Usage java -jar target\\searchFiles.jar ROOT_PATH FILE_EXTENSION");
-        }
+        checkArgs(args);
         Path start = Paths.get(args[3]);
         Predicate<Path> predicate = p -> p.toFile().getName().endsWith(args[4]);
         search(start, predicate).forEach(System.out::println);
@@ -24,5 +19,24 @@ public class Search {
         SearchFiles searcher = new SearchFiles(condition);
         Files.walkFileTree(root, searcher);
         return searcher.getPaths();
+    }
+
+    public static void checkArgs(String[] args) {
+        if (args.length != 5
+                || !args[0].equals("java")
+                || !args[1].equals("-jar")
+                || !args[2].endsWith(".jar")
+                || !args[4].startsWith(".")) {
+            throw new IllegalArgumentException(
+                    "Incorrect set of program arguments. "
+                            + "Usage java -jar target\\searchFiles.jar ROOT_PATH FILE_EXTENSION"
+            );
+        }
+        if (!Paths.get(args[3]).toFile().exists()) {
+            throw new IllegalArgumentException(
+                    "There is no file in the source path."
+                            + "Usage java -jar target\\searchFiles.jar ROOT_PATH FILE_EXTENSION"
+            );
+        }
     }
 }
