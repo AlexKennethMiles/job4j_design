@@ -116,7 +116,7 @@
             </configuration>
           </execution>
           <execution>
-            <id>searchFiles</id>
+            <id>zipFiles</id>
             <phase>package</phase>
             <goals>
               <goal>shade</goal>
