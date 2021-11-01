@@ -29,13 +29,13 @@ public class Search {
                 || !args[4].startsWith(".")) {
             throw new IllegalArgumentException(
                     "Incorrect set of program arguments. "
-                            + "Usage java -jar target\\searchFiles.jar ROOT_PATH FILE_EXTENSION"
+                            + "Usage java -jar searchFiles.jar ROOT_PATH FILE_EXTENSION"
             );
         }
         if (!Paths.get(args[3]).toFile().exists()) {
             throw new IllegalArgumentException(
                     "There is no file in the source path."
-                            + "Usage java -jar target\\searchFiles.jar ROOT_PATH FILE_EXTENSION"
+                            + "Usage java -jar searchFiles.jar ROOT_PATH FILE_EXTENSION"
             );
         }
     }

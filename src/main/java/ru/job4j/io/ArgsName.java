@@ -16,7 +16,7 @@ public class ArgsName {
         for (String arg : args) {
             checkTemplatesCompliance(arg);
             rsl = arg.split("=");
-            values.put(rsl[0].substring(1), rsl[1]);
+            values.put(rsl[0], rsl[1]);
         }
     }
 
@@ -25,10 +25,9 @@ public class ArgsName {
         if (cursor == -1 || !arg.startsWith("-")) {
             throw new IllegalArgumentException("Invalid key value pair. Usage -key=value.");
         }
-        String key = arg.substring(1, cursor);
+        String key = arg.substring(0, cursor);
         String value = arg.substring(cursor + 1);
         if (key.isEmpty()
-                || key.startsWith("-")
                 || key.contains("=")
                 || value.contains("=")
                 || value.isEmpty()) {
