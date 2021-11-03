@@ -38,6 +38,7 @@ public class ConsoleChat {
                 if (bufScanner.equals(CONTINUE)) {
                     flag = true;
                     System.out.println(bufBotAnswer);
+                    rsl.add(bufBotAnswer);
                 }
             }
             bufScanner = command.nextLine();
