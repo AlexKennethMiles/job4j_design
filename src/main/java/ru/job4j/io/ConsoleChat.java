@@ -7,37 +7,45 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleChat {
-    private final String path;
+    private final String targetPath;
     private final String botAnswers;
     private static final String OUT = "завершить";
     private static final String STOP = "стоп";
     private static final String CONTINUE = "продолжить";
 
-    public ConsoleChat(String path, String botAnswers) {
-        this.path = path;
+    public ConsoleChat(String targetPath, String botAnswers) {
+        this.targetPath = targetPath;
         this.botAnswers = botAnswers;
     }
 
     public void run() {
         Scanner command = new Scanner(System.in);
+        List<String> rsl = new ArrayList<>();
+        List<String> answers = readPhrases();
         boolean flag = true;
-        String buf = command.nextLine();
-        while (!buf.equals(OUT)) {
+        String bufScanner = command.nextLine();
+        String bufBotAnswer = answers.get((int) (Math.random() * answers.size()));
+        while (!bufScanner.equals(OUT)) {
+            rsl.add(bufScanner);
             if (flag) {
-                if (buf.equals(STOP)) {
+                if (bufScanner.equals(STOP)) {
                     flag = false;
                 } else {
-                    System.out.println(botAnswers);
+                    System.out.println(bufBotAnswer);
+                    rsl.add(bufBotAnswer);
                 }
             } else {
-                if (buf.equals(CONTINUE)) {
+                if (bufScanner.equals(CONTINUE)) {
                     flag = true;
-                    System.out.println(botAnswers);
+                    System.out.println(bufBotAnswer);
                 }
             }
-            buf = command.nextLine();
+            bufScanner = command.nextLine();
+            bufBotAnswer = answers.get((int) (Math.random() * answers.size()));
         }
+        rsl.add(bufScanner);
         command.close();
+        saveLog(rsl);
     }
 
     private List<String> readPhrases() {
@@ -53,7 +61,7 @@ public class ConsoleChat {
 
     private void saveLog(List<String> log) {
         try (PrintWriter out = new PrintWriter(
-                new FileWriter(path, Charset.forName("Windows-1251")))) {
+                new FileWriter(targetPath, Charset.forName("Windows-1251")))) {
             log.forEach(out::println);
         } catch (IOException e) {
             e.printStackTrace();
@@ -61,7 +69,7 @@ public class ConsoleChat {
     }
 
     public static void main(String[] args) {
-        ConsoleChat cc = new ConsoleChat("consoleChatLog.txt", "Hello!");
+        ConsoleChat cc = new ConsoleChat("consoleChatLog.txt", "./data/botPhrases.txt");
         cc.run();
     }
 }
