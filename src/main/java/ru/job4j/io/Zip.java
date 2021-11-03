@@ -66,7 +66,7 @@ public class Zip {
                 .collect(Collectors.toList());
     }
 
-    /* java -jar pack.jar -d=job4j_design\src -e=class -o=src.zip */
+    /* java -jar pack.jar -d=./src -e=class -o=src.zip */
     public static void main(String[] args) throws IOException {
         Zip zip = new Zip();
         zip.commandParsing(args);
