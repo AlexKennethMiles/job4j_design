@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleChat {
+    private List<String> answers = new ArrayList<>();
     private final String targetPath;
     private final String botAnswers;
     private static final String OUT = "завершить";
@@ -19,45 +20,48 @@ public class ConsoleChat {
     }
 
     public void run() {
+        readPhrases();
         Scanner command = new Scanner(System.in);
         List<String> rsl = new ArrayList<>();
-        List<String> answers = readPhrases();
         boolean flag = true;
-        String bufScanner = command.nextLine();
-        String bufBotAnswer = answers.get((int) (Math.random() * answers.size()));
-        while (!bufScanner.equals(OUT)) {
+        boolean isExit = false;
+        String bufScanner;
+        String bufBotAnswer;
+        while (!isExit) {
+            bufScanner = command.nextLine();
             rsl.add(bufScanner);
+            if (OUT.equals(bufScanner)) {
+                isExit = true;
+                continue;
+            }
+            bufBotAnswer = answers.get((int) (Math.random() * answers.size()));
             if (flag) {
-                if (bufScanner.equals(STOP)) {
+                if (STOP.equals(bufScanner)) {
                     flag = false;
                 } else {
                     System.out.println(bufBotAnswer);
                     rsl.add(bufBotAnswer);
                 }
             } else {
-                if (bufScanner.equals(CONTINUE)) {
+                if (CONTINUE.equals(bufScanner)) {
                     flag = true;
                     System.out.println(bufBotAnswer);
                     rsl.add(bufBotAnswer);
                 }
             }
-            bufScanner = command.nextLine();
-            bufBotAnswer = answers.get((int) (Math.random() * answers.size()));
         }
-        rsl.add(bufScanner);
         command.close();
         saveLog(rsl);
     }
 
     private List<String> readPhrases() {
-        List<String> readingRsl = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(
                 new FileReader(botAnswers, Charset.forName("Windows-1251")))) {
-            in.lines().forEach(readingRsl::add);
+            in.lines().forEach(answers::add);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return readingRsl;
+        return answers;
     }
 
     private void saveLog(List<String> log) {
