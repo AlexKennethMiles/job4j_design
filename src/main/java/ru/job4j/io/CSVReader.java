@@ -1,38 +1,49 @@
 package ru.job4j.io;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.nio.file.Paths;
 import java.util.*;
 
 public class CSVReader {
-    public static void handle(ArgsName argsName) throws Exception {
+    public static void handle(ArgsName argsName) {
         File source = Paths.get(argsName.get("-path")).toFile();
-        var scanner = new Scanner(source);
-        StringBuilder rsl = new StringBuilder();
-        ArrayList<Integer> numberOfColumn = new ArrayList<>();
-        List<String> headers = Arrays.asList(argsName.get("-filter").split(","));
-        if (scanner.hasNextLine()) {
-            String[] bufColumn = scanner.nextLine().split(";");
-            for (int i = 0; i < bufColumn.length; i++) {
-                if (headers.contains(bufColumn[i])) {
-                    rsl.append(bufColumn[i]).append(";");
-                    numberOfColumn.add(i);
-                }
-            }
-            rsl.append(System.lineSeparator());
-            while (scanner.hasNextLine()) {
-                bufColumn = scanner.nextLine().split(";");
+        try (var scanner = new Scanner(source)) {
+            List<List<String>> rows = new ArrayList<>();
+            ArrayList<Integer> numberOfColumn = new ArrayList<>();
+            List<String> headers = Arrays.asList(argsName.get("-filter").split(","));
+            if (scanner.hasNextLine()) {
+                rows.add(new ArrayList<>());
+                String[] bufColumn = scanner.nextLine().split(";");
                 for (int i = 0; i < bufColumn.length; i++) {
-                    if (numberOfColumn.contains(i)) {
-                        rsl.append(bufColumn[i]).append(";");
+                    if (headers.contains(bufColumn[i])) {
+                        rows.get(0).add(bufColumn[i]);
+                        numberOfColumn.add(i);
                     }
                 }
-                rsl.append(System.lineSeparator());
+                int rowCount = 1;
+                while (scanner.hasNextLine()) {
+                    bufColumn = scanner.nextLine().split(";");
+                    rows.add(new ArrayList<>());
+                    for (int i = 0; i < bufColumn.length; i++) {
+                        if (numberOfColumn.contains(i)) {
+                            rows.get(rowCount).add(bufColumn[i]);
+                        }
+                    }
+                    rowCount++;
+                }
+                try (PrintWriter out = new PrintWriter(argsName.get("-out"))) {
+                    for (List<String> row : rows) {
+                        for (int i = 0; i < row.size() - 1; i++) {
+                            out.print(row.get(i) + ";");
+                        }
+                        out.println(row.get(row.size() - 1));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-            System.out.println(rsl);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
