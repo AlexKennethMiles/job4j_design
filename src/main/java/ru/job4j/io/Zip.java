@@ -26,17 +26,6 @@ public class Zip {
         }
     }
 
-    public static void packSingleFile(File source, File target) {
-        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
-            zip.putNextEntry(new ZipEntry(source.getPath()));
-            try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(source))) {
-                zip.write(in.readAllBytes());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void commandParsing(String[] args) {
         if (args.length != 6
                 || !args[0].equals("java")
@@ -44,7 +33,7 @@ public class Zip {
                 || !args[2].endsWith(".jar")) {
             throw new IllegalArgumentException(
                     "Incorrect set of program arguments. "
-                            + "Usage java -jar pack.jar -d=CATALOG_NAME\\SOURCE -e=EXCLUDED_EXTENSION -o=TARGET"
+                            + "Usage java -jar pack.jar -d=SOURCE -e=EXCLUDED_EXTENSION -o=TARGET"
             );
         }
         String[] buf = {args[3], args[4], args[5]};
@@ -53,7 +42,7 @@ public class Zip {
         if (!file.exists()) {
             throw new IllegalArgumentException(
                     "There is no file in the source path. "
-                            + "Usage java -jar pack.jar -d=job4j_design\\SOURCE -e=EXCLUDED_EXTENSION -o=TARGET"
+                            + "Usage java -jar pack.jar -d=SOURCE -e=EXCLUDED_EXTENSION -o=TARGET"
             );
         }
     }
@@ -66,7 +55,7 @@ public class Zip {
                 .collect(Collectors.toList());
     }
 
-    /* java -jar pack.jar -d=./src -e=class -o=src.zip */
+    /* java -jar pack.jar -d=src -e=class -o=src.zip */
     public static void main(String[] args) throws IOException {
         Zip zip = new Zip();
         zip.commandParsing(args);
