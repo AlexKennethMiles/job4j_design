@@ -52,7 +52,7 @@ public class CSVReader {
     }
 
     private static void outputRsl(ArgsName argsName, List<List<String>> rows) {
-        if (argsName.get("-out").equals("stdout")) {
+        if ("stdout".equals(argsName.get("-out"))) {
             for (List<String> row : rows) {
                 for (int i = 0; i < row.size() - 1; i++) {
                     System.out.print(row.get(i) + ";");
