@@ -1,7 +1,6 @@
 package ru.job4j.serialization;
 
 import java.io.*;
-import java.nio.file.Files;
 
 public class Contact implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -31,16 +30,18 @@ public class Contact implements Serializable {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         final Contact contact = new Contact(1233, "+81-3-345-6789");
+        System.out.println(contact);
 
-        File tempFile = Files.createTempFile(null, null).toFile();
-        try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+        try (FileOutputStream fos = new FileOutputStream("contact.bin")) {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(contact);
+            oos.close();
         }
 
-        try (FileInputStream fis = new FileInputStream(tempFile)) {
+        try (FileInputStream fis = new FileInputStream("contact.bin")) {
             ObjectInputStream ois = new ObjectInputStream(fis);
             final Contact contactFromFile = (Contact) ois.readObject();
+            ois.close();
             System.out.println(contactFromFile);
         }
     }
