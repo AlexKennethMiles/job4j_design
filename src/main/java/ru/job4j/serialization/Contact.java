@@ -32,13 +32,13 @@ public class Contact implements Serializable {
         final Contact contact = new Contact(1233, "+81-3-345-6789");
         System.out.println(contact);
 
-        try (FileOutputStream fos = new FileOutputStream("contact.bin")) {
+        try (FileOutputStream fos = new FileOutputStream("./data/contact.bin")) {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(contact);
             oos.close();
         }
 
-        try (FileInputStream fis = new FileInputStream("contact.bin")) {
+        try (FileInputStream fis = new FileInputStream("./data/contact.bin")) {
             ObjectInputStream ois = new ObjectInputStream(fis);
             final Contact contactFromFile = (Contact) ois.readObject();
             ois.close();
