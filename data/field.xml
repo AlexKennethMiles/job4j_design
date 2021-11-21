@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<field isProcessed="true" square="1000.0D">
+    <crop title="Rice"/>
+    <processingLogs>
+        <processingLog>22.05.2021</processingLog>
+        <processingLog>09.06.2021</processingLog>
+    </processingLogs>
+</field>
