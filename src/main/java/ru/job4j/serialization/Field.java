@@ -1,12 +1,23 @@
 package ru.job4j.serialization;
 
+import javax.xml.bind.annotation.*;
 import java.util.Arrays;
 
+@XmlRootElement(name = "field")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Field {
+    @XmlAttribute
     private boolean isProcessed;
+    @XmlAttribute
     private double square;
+    @XmlElement
     private Crop currCrop;
+    @XmlElementWrapper(name = "processingLogs")
+    @XmlElement(name = "processingLog")
     private String[] processingLog;
+
+    public Field() {
+    }
 
     public Field(boolean isProcessed, double square, Crop currCrop, String[] processingLog) {
         this.isProcessed = isProcessed;
