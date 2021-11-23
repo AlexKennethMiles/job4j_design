@@ -26,6 +26,22 @@ public class Field {
         this.processingLog = processingLog;
     }
 
+    public boolean isProcessed() {
+        return isProcessed;
+    }
+
+    public double getSquare() {
+        return square;
+    }
+
+    public Crop getCurrCrop() {
+        return currCrop;
+    }
+
+    public String[] getProcessingLog() {
+        return processingLog;
+    }
+
     @Override
     public String toString() {
         return "Field{"

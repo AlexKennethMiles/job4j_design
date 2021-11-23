@@ -1,7 +1,7 @@
 package ru.job4j.serialization;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.xml.bind.*;
 import java.io.*;
@@ -13,21 +13,17 @@ public class Main {
                 new Crop("Rice"),
                 new String[]{"22.05.2021", "09.06.2021"}
         );
+        JSONObject oldField = new JSONObject(field);
+        System.out.println(oldField);
 
-        JAXBContext context = JAXBContext.newInstance(Field.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        String xml = "";
-        try (StringWriter writer = new StringWriter()) {
-            marshaller.marshal(field, writer);
-            xml = writer.getBuffer().toString();
-            System.out.println(xml);
-        }
-
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        try (StringReader reader = new StringReader(xml)) {
-            Field result = (Field) unmarshaller.unmarshal(reader);
-            System.out.println(result);
-        }
+        String[] processingLog = {"16.06.2021", "20.08.2021"};
+        JSONArray jsonProcessingLog = new JSONArray(processingLog);
+        JSONObject crop = new JSONObject("{\"currCrop\":\"Wheat\"}");
+        JSONObject newField = new JSONObject();
+        newField.put("isProcessed", field.isProcessed());
+        newField.put("square", field.getSquare());
+        newField.put("title", crop);
+        newField.put("processingLog", jsonProcessingLog);
+        System.out.println(newField);
     }
 }
