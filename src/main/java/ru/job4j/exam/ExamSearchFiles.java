@@ -12,11 +12,9 @@ import java.util.function.Predicate;
 public class ExamSearchFiles extends SimpleFileVisitor<Path> {
     private Predicate<Path> condition;
     private List<Path> paths = new ArrayList<>();
-    private String mod;
 
-    public ExamSearchFiles(Predicate<Path> condition, String mod) {
+    public ExamSearchFiles(Predicate<Path> condition) {
         this.condition = condition;
-        this.mod = mod;
     }
 
     @Override
