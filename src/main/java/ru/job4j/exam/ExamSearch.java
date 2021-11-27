@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 public class ExamSearch {
     public static ExamArgsName checkAndParseArgs(String[] args) {
@@ -47,7 +48,8 @@ public class ExamSearch {
             String mask = argsName.get("-n").replace("*", "");
             condition = p -> p.toFile().getName().endsWith(mask);
         } else {
-            condition = p -> p.toFile().getName().matches(argsName.get("-n"));
+            Pattern pattern = Pattern.compile(argsName.get("-n"));
+            condition = p -> pattern.matcher(p.toFile().getName()).matches();
         }
         ExamSearchFiles searcher = new ExamSearchFiles(condition);
         Files.walkFileTree(Paths.get(argsName.get("-d")), searcher);
@@ -55,21 +57,21 @@ public class ExamSearch {
     }
 
     private static void writeLog(ExamArgsName rslArgs, List<Path> searchRsl) {
-        try {
-            BufferedWriter out = new BufferedWriter(new FileWriter(rslArgs.get("-o")));
+        try (BufferedWriter out = new BufferedWriter(
+                new FileWriter(rslArgs.get("-o"))
+        )) {
             for (Path path : searchRsl) {
                 out.write(path.toString());
                 out.newLine();
             }
             out.flush();
-            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * java -jar target/find.jar -d=. -n=.*.txt -t=regex -o=./data/log.txt
+     * java -jar target/find.jar -d=. -n=.+.txt -t=regex -o=./data/log.txt
      **/
     public static void main(String[] args) throws IOException {
         ExamArgsName rslArgs = checkAndParseArgs(args);
