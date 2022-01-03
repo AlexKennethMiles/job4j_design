@@ -20,9 +20,9 @@ public class ExamSearch {
         }
         ExamArgsName argsName = new ExamArgsName();
         argsName.parse(args);
-        if (!argsName.get("-t").equals("mask")
-                && !argsName.get("-t").equals("name")
-                && !argsName.get("-t").equals("regex")) {
+        if (!"mask".equals(argsName.get("-t"))
+                && !"name".equals(argsName.get("-t"))
+                && !"regex".equals(argsName.get("-t"))) {
             throw new IllegalArgumentException(
                     "Incorrect operation mode. "
                             + "Use one of them: mask, name, regex."
@@ -42,9 +42,9 @@ public class ExamSearch {
      **/
     private static List<Path> search(ExamArgsName argsName) throws IOException {
         Predicate<Path> condition;
-        if (argsName.get("-t").equals("name")) {
+        if ("name".equals(argsName.get("-t"))) {
             condition = p -> p.toFile().getName().equals(argsName.get("-n"));
-        } else if (argsName.get("-t").equals("mask")) {
+        } else if ("mask".equals(argsName.get("-t"))) {
             String mask = argsName.get("-n").replace("*", "");
             condition = p -> p.toFile().getName().endsWith(mask);
         } else {
