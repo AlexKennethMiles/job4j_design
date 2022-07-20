@@ -1,0 +1,7 @@
+Petr Arsentev;parsentev@yandex.ru;
+Ivan Ivanov;ivanov@gmail.com;
+Sergey Afanasyev;afanasyev@mail.ru;
+Semyon Bessonov;bessonov@mail.ru;
+Kirill Goncharov;goncharov@yandex.ru;
+Ivan Yefimov;yefimov@yandex.ru;
+Evgeny Zakharov;zakharov@gmail.com;
