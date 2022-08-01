@@ -8,6 +8,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 
 public class MaxMinTest {
 
@@ -75,5 +76,13 @@ public class MaxMinTest {
         list.add(new Item(10, 0));
         Comparator<Item> comparator = new CompareItem();
         assertThat(new MaxMin().max(list, comparator), is(new Item(10, 0)));
+    }
+
+    @Test
+    public void whenThereAreNoElements() {
+        List<Item> list = new ArrayList<>();
+        Comparator<Item> comparator = new CompareItem();
+        assertThat(new MaxMin().min(list, comparator), nullValue());
+        assertThat(new MaxMin().max(list, comparator), nullValue());
     }
 }

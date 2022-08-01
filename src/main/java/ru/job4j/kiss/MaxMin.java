@@ -14,6 +14,9 @@ public class MaxMin {
     }
 
     public <T> T findElement(List<T> value, BiPredicate<T, T> predicate) {
+        if (value.size() == 0) {
+            return null;
+        }
         T element = value.get(0);
         for (T t : value) {
             if (predicate.test(element, t)) {
