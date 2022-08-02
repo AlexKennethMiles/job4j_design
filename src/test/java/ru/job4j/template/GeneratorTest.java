@@ -1,5 +1,6 @@
 package ru.job4j.template;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -19,6 +20,7 @@ class GeneratorTest {
                 .isNull();
     }
 
+    @Disabled
     @Test
     public void whenEmptyMap() {
         Generator generator = new SimpleGenerator();
@@ -28,6 +30,7 @@ class GeneratorTest {
         });
     }
 
+    @Disabled
     @Test
     public void whenEmptyTemplate() {
         Generator generator = new SimpleGenerator();
@@ -39,6 +42,7 @@ class GeneratorTest {
         });
     }
 
+    @Disabled
     @Test
     public void whenTemplateIsNull() {
         Generator generator = new SimpleGenerator();
@@ -50,6 +54,7 @@ class GeneratorTest {
         });
     }
 
+    @Disabled
     @Test
     public void whenInvalidTemplate() {
         Generator generator = new SimpleGenerator();
@@ -61,6 +66,7 @@ class GeneratorTest {
         });
     }
 
+    @Disabled
     @Test
     public void whenInvalidMap() {
         Generator generator = new SimpleGenerator();
