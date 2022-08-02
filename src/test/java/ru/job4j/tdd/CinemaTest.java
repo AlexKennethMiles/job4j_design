@@ -36,6 +36,7 @@ public class CinemaTest {
         assertThat(sessions).isNull();
     }
 
+    @Disabled
     @Test
     public void whenTheSessionAlreadyExists() {
         Cinema cinema = new Cinema3D();
