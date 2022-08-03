@@ -8,9 +8,11 @@ public class HRReportEngine implements Report {
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd:MM:yyyy HH:mm");
 
     private Store store;
+    private DescSalaryOrder order;
 
-    public HRReportEngine(Store store) {
+    public HRReportEngine(Store store, DescSalaryOrder order) {
         this.store = store;
+        this.order = order;
     }
 
     @Override
@@ -18,8 +20,7 @@ public class HRReportEngine implements Report {
         StringBuilder text = new StringBuilder();
         text.append("Name; Hired; Fired; Salary;")
                 .append(System.lineSeparator());
-        DescSalaryOrder sort = new DescSalaryOrder();
-        for (Employee employee : sort.sortByDescSalary(store.findBy(filter), new CompareEmployeeSalary())) {
+        for (Employee employee : order.sortByDescSalary(store.findBy(filter), new CompareEmployeeSalary())) {
             text.append(employee.getName()).append(";")
                     .append(employee.getSalary()).append(";")
                     .append(System.lineSeparator());

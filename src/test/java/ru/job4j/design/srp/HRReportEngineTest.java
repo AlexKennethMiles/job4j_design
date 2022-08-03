@@ -20,7 +20,7 @@ class HRReportEngineTest {
         store.add(b);
         store.add(c);
         store.add(d);
-        Report engine = new HRReportEngine(store);
+        Report engine = new HRReportEngine(store, new DescSalaryOrder());
         StringBuilder expect = new StringBuilder()
                 .append("Name; Hired; Fired; Salary;")
                 .append(System.lineSeparator())

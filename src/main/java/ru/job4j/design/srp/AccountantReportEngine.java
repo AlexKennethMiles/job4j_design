@@ -8,6 +8,7 @@ import static ru.job4j.design.srp.ReportEngine.DATE_FORMAT;
 public class AccountantReportEngine implements Report {
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd:MM:yyyy HH:mm");
+    public static final double RUR_TO_USD = 36.1D;
 
     private Store store;
 
@@ -24,7 +25,7 @@ public class AccountantReportEngine implements Report {
             text.append(employee.getName()).append(";")
                     .append(DATE_FORMAT.format(employee.getHired().getTime())).append(";")
                     .append(DATE_FORMAT.format(employee.getFired().getTime())).append(";")
-                    .append(employee.getSalary() * 36.1D).append("$").append(";")
+                    .append(employee.getSalary() * RUR_TO_USD).append("$").append(";")
                     .append(System.lineSeparator());
         }
         return text.toString();
