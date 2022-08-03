@@ -2,13 +2,15 @@ package ru.job4j.ood.srp;
 
 import java.util.Objects;
 
-public class Product {
+public class DiscountProduct {
     private String name;
     private float price;
+    private SaleGenerator saleGenerator;
 
-    public Product(String name, float price) {
+    public DiscountProduct(String name, float price, SaleGenerator saleGenerator) {
         this.name = name;
         this.price = price;
+        this.saleGenerator = saleGenerator;
     }
 
     public String getName() {
@@ -20,11 +22,19 @@ public class Product {
     }
 
     public float getPrice() {
-        return price;
+        return saleGenerator.getSale(price);
     }
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public SaleGenerator getSaleGenerator() {
+        return saleGenerator;
+    }
+
+    public void setSaleGenerator(SaleGenerator saleGenerator) {
+        this.saleGenerator = saleGenerator;
     }
 
     @Override
@@ -35,8 +45,8 @@ public class Product {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Product product = (Product) o;
-        return Float.compare(product.price, price) == 0 && Objects.equals(name, product.name);
+        DiscountProduct that = (DiscountProduct) o;
+        return Float.compare(that.price, price) == 0 && Objects.equals(name, that.name);
     }
 
     @Override
@@ -46,9 +56,10 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{"
+        return "DiscountProduct{"
                 + "name='" + name + '\''
                 + ", price=" + price
+                + ", saleGenerator=" + saleGenerator
                 + '}';
     }
 }
