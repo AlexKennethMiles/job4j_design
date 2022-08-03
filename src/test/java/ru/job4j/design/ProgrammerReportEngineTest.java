@@ -1,11 +1,15 @@
-package ru.job4j.design.srp;
+package ru.job4j.design;
 
 import org.junit.jupiter.api.Test;
+import ru.job4j.design.srp.*;
+import ru.job4j.design.srp.Employee;
+import ru.job4j.design.srp.MemStore;
+import ru.job4j.design.srp.ProgrammerReportEngine;
+import ru.job4j.design.srp.Report;
 
 import java.util.Calendar;
 
 import static org.assertj.core.api.Assertions.*;
-import static ru.job4j.design.srp.ReportEngine.DATE_FORMAT;
 
 class ProgrammerReportEngineTest {
     @Test
@@ -18,8 +22,8 @@ class ProgrammerReportEngineTest {
         StringBuilder expect = new StringBuilder()
                 .append("<html><head><title>Отчёт для программистов</title><meta charset=\"utf-8\"></head>")
                 .append("<h1>").append(worker.getName()).append("</h1>")
-                .append("<p>").append(DATE_FORMAT.format(worker.getHired().getTime())).append("</p>")
-                .append("<p>").append(DATE_FORMAT.format(worker.getFired().getTime())).append("</p>")
+                .append("<p>").append(ReportEngine.DATE_FORMAT.format(worker.getHired().getTime())).append("</p>")
+                .append("<p>").append(ReportEngine.DATE_FORMAT.format(worker.getFired().getTime())).append("</p>")
                 .append("<p>").append(worker.getSalary()).append("</p>")
                 .append("<p>").append(System.lineSeparator()).append("</p>")
                 .append("<hr>")

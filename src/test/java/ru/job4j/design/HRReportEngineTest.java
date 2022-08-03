@@ -1,11 +1,11 @@
-package ru.job4j.design.srp;
+package ru.job4j.design;
 
 import org.junit.jupiter.api.Test;
+import ru.job4j.design.srp.*;
 
 import java.util.Calendar;
 
 import static org.assertj.core.api.Assertions.*;
-import static ru.job4j.design.srp.ReportEngine.DATE_FORMAT;
 
 class HRReportEngineTest {
     @Test
