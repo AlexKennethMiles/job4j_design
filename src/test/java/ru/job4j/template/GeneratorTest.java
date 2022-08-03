@@ -10,14 +10,16 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class GeneratorTest {
+
+    @Disabled
     @Test
     public void whenEverythingSucceeded() {
         Generator generator = new SimpleGenerator();
         Map<String, String> map = new HashMap<>();
-        map.put("${name}", "Alexey");
-        map.put("${subject}", "you");
+        map.put("name", "Alexey");
+        map.put("subject", "you");
         assertThat(generator.produce("I am a ${name}, Who are ${subject}?", map))
-                .isNull();
+                .isEqualTo("I am a Alexey, Who are you?");
     }
 
     @Disabled
@@ -35,8 +37,8 @@ class GeneratorTest {
     public void whenEmptyTemplate() {
         Generator generator = new SimpleGenerator();
         Map<String, String> map = new HashMap<>();
-        map.put("${name}", "Alexey");
-        map.put("${subject}", "you");
+        map.put("name", "Alexey");
+        map.put("subject", "you");
         assertThrows(IllegalArgumentException.class, () -> {
             generator.produce("", map);
         });
@@ -47,8 +49,8 @@ class GeneratorTest {
     public void whenTemplateIsNull() {
         Generator generator = new SimpleGenerator();
         Map<String, String> map = new HashMap<>();
-        map.put("${name}", "Alexey");
-        map.put("${subject}", "you");
+        map.put("name", "Alexey");
+        map.put("subject", "you");
         assertThrows(IllegalArgumentException.class, () -> {
             generator.produce(null, map);
         });
@@ -59,8 +61,8 @@ class GeneratorTest {
     public void whenInvalidTemplate() {
         Generator generator = new SimpleGenerator();
         Map<String, String> map = new HashMap<>();
-        map.put("${name}", "Alexey");
-        map.put("${subject}", "you");
+        map.put("name", "Alexey");
+        map.put("subject", "you");
         assertThrows(IllegalArgumentException.class, () -> {
             generator.produce("I am a ${name}, Who are ${subject}? ${emoji}", map);
         });
@@ -71,9 +73,9 @@ class GeneratorTest {
     public void whenInvalidMap() {
         Generator generator = new SimpleGenerator();
         Map<String, String> map = new HashMap<>();
-        map.put("${name}", "Alexey");
-        map.put("${subject}", "you");
-        map.put("${emoji}", ":slightly_smiling_face:");
+        map.put("name", "Alexey");
+        map.put("subject", "you");
+        map.put("emoji", ":slightly_smiling_face:");
         assertThrows(IllegalArgumentException.class, () -> {
             generator.produce("I am a ${name}, Who are ${subject}?", map);
         });
