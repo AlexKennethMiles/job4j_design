@@ -1,9 +1,9 @@
 package ru.job4j.design.srp;
 
-import org.junit.Ignore;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import java.util.Calendar;
@@ -12,9 +12,8 @@ import java.util.GregorianCalendar;
 import static org.assertj.core.api.Assertions.*;
 
 class XMLReportEngineTest {
-    @Disabled
     @Test
-    public void whenXMLGenerated() {
+    public void whenXMLGenerated() throws JAXBException {
         Store store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
@@ -23,31 +22,24 @@ class XMLReportEngineTest {
         try {
             expect = new StringBuilder()
                     .append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>")
-                    .append("\n")
                     .append("<employees>")
-                    .append(System.lineSeparator())
-                    .append("    <employees>")
-                    .append(System.lineSeparator())
-                    .append("        <fired>"
-                            + DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar) now)
-                            + "</fired>")
-                    .append(System.lineSeparator())
-                    .append("        <hired>"
-                            + DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar) now)
-                            + "</hired>")
-                    .append(System.lineSeparator())
-                    .append("        <name>Ivan</name>")
-                    .append(System.lineSeparator())
-                    .append("        <salary>100.0</salary>")
-                    .append(System.lineSeparator())
-                    .append("    </employees>")
-                    .append(System.lineSeparator())
+                    .append("<employees>")
+                    .append("<fired>")
+                    .append(DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar) now))
+                    .append("</fired>")
+                    .append("<hired>")
+                    .append(DatatypeFactory.newInstance().newXMLGregorianCalendar((GregorianCalendar) now))
+                    .append("</hired>")
+                    .append("<name>Ivan</name>")
+                    .append("<salary>100.0</salary>")
                     .append("</employees>")
-                    .append(System.lineSeparator());
+                    .append("</employees>");
         } catch (DatatypeConfigurationException e) {
             e.printStackTrace();
         }
-        XMLReportEngine engine = new XMLReportEngine(store);
-        assertThat(engine.generate(o -> true)).isEqualTo(expect.toString());
+        JAXBContext context = JAXBContext.newInstance(Employees.class);
+        XMLReportEngine engine = new XMLReportEngine(store, context);
+        assertThat(engine.generate(o -> true).replaceAll("\\n\\s*", ""))
+                .isEqualTo(expect != null ? expect.toString() : null);
     }
 }

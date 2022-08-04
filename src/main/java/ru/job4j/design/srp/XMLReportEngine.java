@@ -9,17 +9,19 @@ import java.util.function.Predicate;
 
 public class XMLReportEngine implements Report {
     private Store store;
+    private JAXBContext context;
+    private Marshaller marshaller;
 
-    public XMLReportEngine(Store store) {
+    public XMLReportEngine(Store store, JAXBContext context) throws JAXBException {
         this.store = store;
+        this.context = context;
+        this.marshaller = context.createMarshaller();
     }
 
     @Override
     public String generate(Predicate<Employee> filter) {
         String xml = "";
         try {
-            JAXBContext context = JAXBContext.newInstance(Employees.class);
-            Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             try (StringWriter writer = new StringWriter()) {
                 marshaller.marshal(new Employees(store.findBy(filter)), writer);
