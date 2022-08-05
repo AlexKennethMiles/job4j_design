@@ -1,7 +1,7 @@
 package ru.job4j.ood.lsp;
 
 public class Square implements Shape {
-    int a;
+    private int a;
 
     public Square(int a) {
         this.a = a;
