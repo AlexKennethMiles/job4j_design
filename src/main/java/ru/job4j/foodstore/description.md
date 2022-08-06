@@ -7,6 +7,6 @@
 
 Схема зависимостей:
 
-![](https://i2.paste.pics/HYRY8.png)
+![](https://i2.paste.pics/I0N8T.png)
 
 Задание выполнено с соблюдением принципов _SRP_, _OCP_ и _LSP_.

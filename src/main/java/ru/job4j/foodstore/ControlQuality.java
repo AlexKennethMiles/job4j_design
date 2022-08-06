@@ -1,22 +1,21 @@
 package ru.job4j.foodstore;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ControlQuality {
-    private List<Store> storages = new ArrayList<>();
+    private List<AbstractStore> storages;
 
-    public ControlQuality(List<Store> storages) {
+    public ControlQuality(List<AbstractStore> storages) {
         this.storages = storages;
     }
 
-    public List<Store> getStorages() {
+    public List<AbstractStore> getStorages() {
         return storages;
     }
 
     public void manageFood(Food food) {
-        for (Store storage : storages) {
-            if (storage.add(food)) {
+        for (AbstractStore storage : storages) {
+            if (storage.accept(food)) {
                 break;
             }
         }

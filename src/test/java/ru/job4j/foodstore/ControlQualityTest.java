@@ -3,7 +3,6 @@ package ru.job4j.foodstore;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -17,8 +16,8 @@ class ControlQualityTest {
                 new Trash()
         ));
         Food fish = new Fish("Salmon",
-                LocalDateTime.of(2022, Month.JUNE, 1, 1, 1),
-                LocalDateTime.of(2024, Month.JUNE, 1, 1, 1),
+                LocalDateTime.now().minusDays(66),
+                LocalDateTime.now().plusDays(665),
                 100F,
                 75F
         );
@@ -34,8 +33,8 @@ class ControlQualityTest {
                 new Trash()
         ));
         Food meat = new Meat("Beef",
-                LocalDateTime.of(2022, Month.AUGUST, 1, 1, 1),
-                LocalDateTime.of(2022, Month.AUGUST, 10, 1, 1),
+                LocalDateTime.now().minusDays(5),
+                LocalDateTime.now().plusDays(4),
                 200F,
                 80F
         );
@@ -51,15 +50,15 @@ class ControlQualityTest {
                 new Trash()
         ));
         Food bun = new Bun("Pie",
-                LocalDateTime.of(2022, Month.JULY, 25, 1, 1),
-                LocalDateTime.of(2022, Month.AUGUST, 7, 1, 1),
+                LocalDateTime.now().minusDays(11),
+                LocalDateTime.now().plusDays(2),
                 45F,
                 50F
         );
         manager.manageFood(bun);
         Food bunDiscount = new Bun("Pie",
-                LocalDateTime.of(2022, Month.JULY, 25, 1, 1),
-                LocalDateTime.of(2022, Month.AUGUST, 7, 1, 1),
+                LocalDateTime.now().minusDays(11),
+                LocalDateTime.now().plusDays(2),
                 22.5F,
                 50F
         );
@@ -74,8 +73,8 @@ class ControlQualityTest {
                 new Trash()
         ));
         Food milk = new Milk("Cow's milk",
-                LocalDateTime.of(2022, Month.JULY, 18, 1, 1),
-                LocalDateTime.of(2022, Month.JULY, 28, 1, 1),
+                LocalDateTime.now().minusDays(18),
+                LocalDateTime.now().minusDays(8),
                 80F,
                 65F
         );
@@ -91,8 +90,8 @@ class ControlQualityTest {
                 new Trash()
         ));
         Food bun = new Bun("Pie",
-                LocalDateTime.of(2021, Month.JANUARY, 10, 1, 1),
-                LocalDateTime.of(2021, Month.JANUARY, 21, 1, 1),
+                LocalDateTime.now().minusDays(572),
+                LocalDateTime.now().minusDays(561),
                 45F,
                 50F
         );
@@ -108,14 +107,14 @@ class ControlQualityTest {
                 new Trash()
         ));
         Food fish = new Fish("Salmon",
-                LocalDateTime.of(2022, Month.JUNE, 1, 1, 1),
-                LocalDateTime.of(2024, Month.JUNE, 1, 1, 1),
+                LocalDateTime.now().minusDays(65),
+                LocalDateTime.now().plusDays(667),
                 100F,
                 75F
         );
         Food meat = new Fish("Pork",
-                LocalDateTime.of(2022, Month.JUNE, 1, 1, 1),
-                LocalDateTime.of(2025, Month.JUNE, 1, 1, 1),
+                LocalDateTime.now().minusDays(65),
+                LocalDateTime.now().plusDays(1_032),
                 85F,
                 80F
         );
@@ -132,19 +131,38 @@ class ControlQualityTest {
                 new Trash()
         ));
         Food milk = new Milk("Cow's milk",
-                LocalDateTime.of(2022, Month.JULY, 18, 1, 1),
-                LocalDateTime.of(2022, Month.JULY, 28, 1, 1),
+                LocalDateTime.now().minusDays(18),
+                LocalDateTime.now().minusDays(8),
                 80F,
                 65F
         );
         Food bun = new Bun("Pie",
-                LocalDateTime.of(2021, Month.JANUARY, 10, 1, 1),
-                LocalDateTime.of(2021, Month.JANUARY, 21, 1, 1),
+                LocalDateTime.now().minusDays(572),
+                LocalDateTime.now().minusDays(561),
                 45F,
                 50F
         );
         manager.manageFood(milk);
         manager.manageFood(bun);
         assertThat(manager.getStorages().get(2).findBy(el -> true)).isEqualTo(List.of(milk, bun));
+    }
+
+    @Test
+    public void whenProductFromFuture() {
+        ControlQuality manager = new ControlQuality(List.of(
+                new Warehouse(),
+                new Shop(),
+                new Trash()
+        ));
+        Food bun = new Bun("Pie",
+                LocalDateTime.now().plusDays(158),
+                LocalDateTime.now().plusDays(2_726),
+                45F,
+                50F
+        );
+        manager.manageFood(bun);
+        assertThat(manager.getStorages().get(0).findBy(el -> true)).isEqualTo(List.of());
+        assertThat(manager.getStorages().get(1).findBy(el -> true)).isEqualTo(List.of());
+        assertThat(manager.getStorages().get(2).findBy(el -> true)).isEqualTo(List.of());
     }
 }
