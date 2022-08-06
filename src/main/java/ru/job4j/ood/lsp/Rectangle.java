@@ -1,8 +1,8 @@
 package ru.job4j.ood.lsp;
 
-public class Rectangle implements Shape {
-    private int width;
-    private int height;
+public class Rectangle {
+    protected int width;
+    protected int height;
 
     public Rectangle(int width, int height) {
         this.width = width;
@@ -25,7 +25,6 @@ public class Rectangle implements Shape {
         this.height = height;
     }
 
-    @Override
     public int getArea() {
         return width * height;
     }

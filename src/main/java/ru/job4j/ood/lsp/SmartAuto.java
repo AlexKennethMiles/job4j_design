@@ -5,10 +5,20 @@ public class SmartAuto extends Auto {
         super(engineType, fuelReserve);
     }
 
+    /**
+     * В переопределённом методе добавлено дополнительное условие — на переменную родительского класса.
+     * Принцип LSP нарушен!
+     *
+     * @param engineType  — от типа двигателя зависит заправляемое топливо (они должны совпадать)
+     * @param fuelReserve — объём заправляемого топлива
+     */
     @Override
     public void refuel(String engineType, float fuelReserve) {
-        doSomething();
-        super.refuel(engineType, fuelReserve);
+        if (super.fuelReserve > 100) {
+            super.refuel(engineType, fuelReserve);
+        } else {
+            super.refuel(engineType, 100);
+        }
     }
 
     private void doSomething() {
