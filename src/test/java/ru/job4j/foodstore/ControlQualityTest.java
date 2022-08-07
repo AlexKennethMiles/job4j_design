@@ -8,6 +8,10 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
 class ControlQualityTest {
+    private static final int WAREHOUSE = 0;
+    private static final int SHOP = 1;
+    private static final int TRASH = 2;
+
     @Test
     public void whenFishGoToWarehouse() {
         ControlQuality manager = new ControlQuality(List.of(
@@ -22,7 +26,7 @@ class ControlQualityTest {
                 75F
         );
         manager.manageFood(fish);
-        assertThat(manager.getStorages().get(0).findBy(el -> true)).isEqualTo(List.of(fish));
+        assertThat(manager.getStorages().get(WAREHOUSE).findBy(el -> true)).isEqualTo(List.of(fish));
     }
 
     @Test
@@ -39,7 +43,7 @@ class ControlQualityTest {
                 80F
         );
         manager.manageFood(meat);
-        assertThat(manager.getStorages().get(1).findBy(el -> true)).isEqualTo(List.of(meat));
+        assertThat(manager.getStorages().get(SHOP).findBy(el -> true)).isEqualTo(List.of(meat));
     }
 
     @Test
@@ -62,7 +66,7 @@ class ControlQualityTest {
                 22.5F,
                 50F
         );
-        assertThat(manager.getStorages().get(1).findBy(el -> true)).isEqualTo(List.of(bunDiscount));
+        assertThat(manager.getStorages().get(SHOP).findBy(el -> true)).isEqualTo(List.of(bunDiscount));
     }
 
     @Test
@@ -79,7 +83,7 @@ class ControlQualityTest {
                 65F
         );
         manager.manageFood(milk);
-        assertThat(manager.getStorages().get(2).findBy(el -> true)).isEqualTo(List.of(milk));
+        assertThat(manager.getStorages().get(TRASH).findBy(el -> true)).isEqualTo(List.of(milk));
     }
 
     @Test
@@ -96,7 +100,7 @@ class ControlQualityTest {
                 50F
         );
         manager.manageFood(bun);
-        assertThat(manager.getStorages().get(2).findBy(el -> true)).isEqualTo(List.of(bun));
+        assertThat(manager.getStorages().get(TRASH).findBy(el -> true)).isEqualTo(List.of(bun));
     }
 
     @Test
@@ -120,7 +124,7 @@ class ControlQualityTest {
         );
         manager.manageFood(fish);
         manager.manageFood(meat);
-        assertThat(manager.getStorages().get(0).findBy(el -> true)).isEqualTo(List.of(fish, meat));
+        assertThat(manager.getStorages().get(WAREHOUSE).findBy(el -> true)).isEqualTo(List.of(fish, meat));
     }
 
     @Test
@@ -144,7 +148,7 @@ class ControlQualityTest {
         );
         manager.manageFood(milk);
         manager.manageFood(bun);
-        assertThat(manager.getStorages().get(2).findBy(el -> true)).isEqualTo(List.of(milk, bun));
+        assertThat(manager.getStorages().get(TRASH).findBy(el -> true)).isEqualTo(List.of(milk, bun));
     }
 
     @Test
@@ -161,8 +165,8 @@ class ControlQualityTest {
                 50F
         );
         manager.manageFood(bun);
-        assertThat(manager.getStorages().get(0).findBy(el -> true)).isEqualTo(List.of());
-        assertThat(manager.getStorages().get(1).findBy(el -> true)).isEqualTo(List.of());
-        assertThat(manager.getStorages().get(2).findBy(el -> true)).isEqualTo(List.of());
+        assertThat(manager.getStorages().get(WAREHOUSE).findBy(el -> true)).isEqualTo(List.of());
+        assertThat(manager.getStorages().get(SHOP).findBy(el -> true)).isEqualTo(List.of());
+        assertThat(manager.getStorages().get(TRASH).findBy(el -> true)).isEqualTo(List.of());
     }
 }
