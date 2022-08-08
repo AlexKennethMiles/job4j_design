@@ -1,5 +1,6 @@
 package ru.job4j.foodstore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControlQuality {
@@ -10,7 +11,7 @@ public class ControlQuality {
     }
 
     public List<AbstractStore> getStorages() {
-        return storages;
+        return new ArrayList<>(storages);
     }
 
     public void manageFood(Food food) {

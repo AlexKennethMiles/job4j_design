@@ -8,16 +8,16 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 
 class ControlQualityTest {
-    private static final int WAREHOUSE = 0;
-    private static final int SHOP = 1;
-    private static final int TRASH = 2;
 
     @Test
     public void whenFishGoToWarehouse() {
+        AbstractStore warehouse = new Warehouse();
+        AbstractStore shop = new Shop();
+        AbstractStore trash = new Trash();
         ControlQuality manager = new ControlQuality(List.of(
-                new Warehouse(),
-                new Shop(),
-                new Trash()
+                warehouse,
+                shop,
+                trash
         ));
         Food fish = new Fish("Salmon",
                 LocalDateTime.now().minusDays(66),
@@ -26,15 +26,18 @@ class ControlQualityTest {
                 75F
         );
         manager.manageFood(fish);
-        assertThat(manager.getStorages().get(WAREHOUSE).findBy(el -> true)).isEqualTo(List.of(fish));
+        assertThat(warehouse.findBy(el -> true)).isEqualTo(List.of(fish));
     }
 
     @Test
     public void whenMeatGoToShopFullPrice() {
+        AbstractStore warehouse = new Warehouse();
+        AbstractStore shop = new Shop();
+        AbstractStore trash = new Trash();
         ControlQuality manager = new ControlQuality(List.of(
-                new Warehouse(),
-                new Shop(),
-                new Trash()
+                warehouse,
+                shop,
+                trash
         ));
         Food meat = new Meat("Beef",
                 LocalDateTime.now().minusDays(5),
@@ -43,15 +46,18 @@ class ControlQualityTest {
                 80F
         );
         manager.manageFood(meat);
-        assertThat(manager.getStorages().get(SHOP).findBy(el -> true)).isEqualTo(List.of(meat));
+        assertThat(shop.findBy(el -> true)).isEqualTo(List.of(meat));
     }
 
     @Test
     public void whenBunGoToShopWithDiscount() {
+        AbstractStore warehouse = new Warehouse();
+        AbstractStore shop = new Shop();
+        AbstractStore trash = new Trash();
         ControlQuality manager = new ControlQuality(List.of(
-                new Warehouse(),
-                new Shop(),
-                new Trash()
+                warehouse,
+                shop,
+                trash
         ));
         Food bun = new Bun("Pie",
                 LocalDateTime.now().minusDays(11),
@@ -66,15 +72,18 @@ class ControlQualityTest {
                 22.5F,
                 50F
         );
-        assertThat(manager.getStorages().get(SHOP).findBy(el -> true)).isEqualTo(List.of(bunDiscount));
+        assertThat(shop.findBy(el -> true)).isEqualTo(List.of(bunDiscount));
     }
 
     @Test
     public void whenMilkGoToTrash() {
+        AbstractStore warehouse = new Warehouse();
+        AbstractStore shop = new Shop();
+        AbstractStore trash = new Trash();
         ControlQuality manager = new ControlQuality(List.of(
-                new Warehouse(),
-                new Shop(),
-                new Trash()
+                warehouse,
+                shop,
+                trash
         ));
         Food milk = new Milk("Cow's milk",
                 LocalDateTime.now().minusDays(18),
@@ -83,15 +92,18 @@ class ControlQualityTest {
                 65F
         );
         manager.manageFood(milk);
-        assertThat(manager.getStorages().get(TRASH).findBy(el -> true)).isEqualTo(List.of(milk));
+        assertThat(trash.findBy(el -> true)).isEqualTo(List.of(milk));
     }
 
     @Test
     public void whenVeryOldBunGoToTrash() {
+        AbstractStore warehouse = new Warehouse();
+        AbstractStore shop = new Shop();
+        AbstractStore trash = new Trash();
         ControlQuality manager = new ControlQuality(List.of(
-                new Warehouse(),
-                new Shop(),
-                new Trash()
+                warehouse,
+                shop,
+                trash
         ));
         Food bun = new Bun("Pie",
                 LocalDateTime.now().minusDays(572),
@@ -100,15 +112,18 @@ class ControlQualityTest {
                 50F
         );
         manager.manageFood(bun);
-        assertThat(manager.getStorages().get(TRASH).findBy(el -> true)).isEqualTo(List.of(bun));
+        assertThat(trash.findBy(el -> true)).isEqualTo(List.of(bun));
     }
 
     @Test
     public void whenSeveralFoodItemGoToWarehouse() {
+        AbstractStore warehouse = new Warehouse();
+        AbstractStore shop = new Shop();
+        AbstractStore trash = new Trash();
         ControlQuality manager = new ControlQuality(List.of(
-                new Warehouse(),
-                new Shop(),
-                new Trash()
+                warehouse,
+                shop,
+                trash
         ));
         Food fish = new Fish("Salmon",
                 LocalDateTime.now().minusDays(65),
@@ -124,15 +139,18 @@ class ControlQualityTest {
         );
         manager.manageFood(fish);
         manager.manageFood(meat);
-        assertThat(manager.getStorages().get(WAREHOUSE).findBy(el -> true)).isEqualTo(List.of(fish, meat));
+        assertThat(warehouse.findBy(el -> true)).isEqualTo(List.of(fish, meat));
     }
 
     @Test
     public void whenSeveralFoodItemGoToTrash() {
+        AbstractStore warehouse = new Warehouse();
+        AbstractStore shop = new Shop();
+        AbstractStore trash = new Trash();
         ControlQuality manager = new ControlQuality(List.of(
-                new Warehouse(),
-                new Shop(),
-                new Trash()
+                warehouse,
+                shop,
+                trash
         ));
         Food milk = new Milk("Cow's milk",
                 LocalDateTime.now().minusDays(18),
@@ -148,15 +166,18 @@ class ControlQualityTest {
         );
         manager.manageFood(milk);
         manager.manageFood(bun);
-        assertThat(manager.getStorages().get(TRASH).findBy(el -> true)).isEqualTo(List.of(milk, bun));
+        assertThat(trash.findBy(el -> true)).isEqualTo(List.of(milk, bun));
     }
 
     @Test
     public void whenProductFromFuture() {
+        AbstractStore warehouse = new Warehouse();
+        AbstractStore shop = new Shop();
+        AbstractStore trash = new Trash();
         ControlQuality manager = new ControlQuality(List.of(
-                new Warehouse(),
-                new Shop(),
-                new Trash()
+                warehouse,
+                shop,
+                trash
         ));
         Food bun = new Bun("Pie",
                 LocalDateTime.now().plusDays(158),
@@ -165,8 +186,8 @@ class ControlQualityTest {
                 50F
         );
         manager.manageFood(bun);
-        assertThat(manager.getStorages().get(WAREHOUSE).findBy(el -> true)).isEqualTo(List.of());
-        assertThat(manager.getStorages().get(SHOP).findBy(el -> true)).isEqualTo(List.of());
-        assertThat(manager.getStorages().get(TRASH).findBy(el -> true)).isEqualTo(List.of());
+        assertThat(warehouse.findBy(el -> true)).isEqualTo(List.of());
+        assertThat(shop.findBy(el -> true)).isEqualTo(List.of());
+        assertThat(trash.findBy(el -> true)).isEqualTo(List.of());
     }
 }
