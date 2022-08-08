@@ -190,4 +190,63 @@ class ControlQualityTest {
         assertThat(shop.findBy(el -> true)).isEqualTo(List.of());
         assertThat(trash.findBy(el -> true)).isEqualTo(List.of());
     }
+
+    @Test
+    public void whenRestoreAllProducts() {
+        AbstractStore warehouse = new Warehouse();
+        AbstractStore shop = new Shop();
+        AbstractStore trash = new Trash();
+        ControlQuality manager = new ControlQuality(List.of(
+                warehouse,
+                shop,
+                trash
+        ));
+        Food fish = new Fish("Trout",
+                LocalDateTime.now().minusDays(7),
+                LocalDateTime.now().plusDays(115),
+                100F,
+                75F
+        );
+        Food meat = new Meat("Beef",
+                LocalDateTime.now().minusDays(21),
+                LocalDateTime.now().plusDays(44),
+                200F,
+                80F
+        );
+        Food milk = new Meat("Cow's milk",
+                LocalDateTime.now().minusDays(8),
+                LocalDateTime.now().minusDays(1),
+                80F,
+                65F
+        );
+        manager.manageFood(fish);
+        manager.manageFood(meat);
+        manager.manageFood(milk);
+        assertThat(warehouse.findBy(el -> true)).isEqualTo(List.of(fish));
+        assertThat(shop.findBy(el -> true)).isEqualTo(List.of(meat));
+        assertThat(trash.findBy(el -> true)).isEqualTo(List.of(milk));
+        manager.resort();
+        assertThat(warehouse.findBy(el -> true)).isEqualTo(List.of(fish));
+        assertThat(shop.findBy(el -> true)).isEqualTo(List.of(meat));
+        assertThat(trash.findBy(el -> true)).isEqualTo(List.of(milk));
+    }
+
+    @Test
+    public void whenRestoreAllProductsButEmptyStorages() {
+        AbstractStore warehouse = new Warehouse();
+        AbstractStore shop = new Shop();
+        AbstractStore trash = new Trash();
+        ControlQuality manager = new ControlQuality(List.of(
+                warehouse,
+                shop,
+                trash
+        ));
+        assertThat(warehouse.findBy(el -> true)).isEqualTo(List.of());
+        assertThat(shop.findBy(el -> true)).isEqualTo(List.of());
+        assertThat(trash.findBy(el -> true)).isEqualTo(List.of());
+        manager.resort();
+        assertThat(warehouse.findBy(el -> true)).isEqualTo(List.of());
+        assertThat(shop.findBy(el -> true)).isEqualTo(List.of());
+        assertThat(trash.findBy(el -> true)).isEqualTo(List.of());
+    }
 }

@@ -21,4 +21,15 @@ public class ControlQuality {
             }
         }
     }
+
+    public void resort() {
+        List<Food> budProducts = new ArrayList<>();
+        for (AbstractStore storage : storages) {
+            budProducts.addAll(storage.products);
+            storage.products.clear();
+        }
+        for (Food budProduct : budProducts) {
+            manageFood(budProduct);
+        }
+    }
 }
