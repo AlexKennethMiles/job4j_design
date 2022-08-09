@@ -1,14 +1,17 @@
 package ru.job4j.design.lsp;
 
 public class Truck implements Auto {
-    private float size;
+    private int size;
 
-    public Truck(float size) {
+    public Truck(int size) {
+        if (size <= PassengerCar.SIZE) {
+            throw new IllegalArgumentException("Incorrect size value!");
+        }
         this.size = size;
     }
 
     @Override
-    public float getSize() {
+    public int getSize() {
         return size;
     }
 

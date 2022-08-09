@@ -6,14 +6,18 @@ import java.util.function.Predicate;
 
 public abstract class AbstractParkingSpace {
     protected List<Auto> cars;
-    protected int numberOfParkingSpaces;
+    protected int spaceCount;
 
-    public AbstractParkingSpace(int numberOfParkingSpaces) {
-        this.cars = new ArrayList<>(numberOfParkingSpaces);
-        this.numberOfParkingSpaces = numberOfParkingSpaces;
+    public AbstractParkingSpace(int spaceCount) {
+        this.cars = new ArrayList<>(spaceCount);
+        this.spaceCount = spaceCount;
     }
 
     public boolean addCar(Auto auto) {
+        if (!accept(auto)) {
+            return false;
+        }
+        spaceCount--;
         return cars.add(auto);
     }
 

@@ -12,6 +12,7 @@ public class ParkingManagement {
     public void manageParkingPlaces(Auto auto) {
         for (AbstractParkingSpace parkingSpace : parkingSpaces) {
             if (parkingSpace.accept(auto)) {
+                parkingSpace.addCar(auto);
                 break;
             }
         }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ParkingManagementTest {
     private static final int TRUCK_PLACES = 0;
@@ -45,7 +46,7 @@ class ParkingManagementTest {
     @Test
     public void whenOnePassengerCarAndTruckGoToPassengerCarPlace() {
         Auto car = new PassengerCar();
-        Auto truck = new Truck(1.7F);
+        Auto truck = new Truck(2);
         ParkingManagement parkingManagement = new ParkingManagement(
                 List.of(
                         new TruckParking(0),
@@ -63,7 +64,7 @@ class ParkingManagementTest {
     @Test
     public void whenOnlyOnePassengerCarGoToPassengerCarPlace() {
         Auto car = new PassengerCar();
-        Auto truck = new Truck(1.7F);
+        Auto truck = new Truck(2);
         ParkingManagement parkingManagement = new ParkingManagement(
                 List.of(
                         new TruckParking(0),
@@ -80,12 +81,12 @@ class ParkingManagementTest {
 
     @Test
     public void whenTwoTrucksGoToPassengerCarPlace() {
-        Auto truckA = new Truck(1.7F);
-        Auto truckB = new Truck(1.3F);
+        Auto truckA = new Truck(2);
+        Auto truckB = new Truck(2);
         ParkingManagement parkingManagement = new ParkingManagement(
                 List.of(
                         new TruckParking(0),
-                        new ParkingForPassengerCars(3)
+                        new ParkingForPassengerCars(4)
                 )
         );
         parkingManagement.manageParkingPlaces(truckA);
@@ -98,8 +99,8 @@ class ParkingManagementTest {
 
     @Test
     public void whenTwoTrucksGoToTruckPlace() {
-        Auto truckA = new Truck(1.7F);
-        Auto truckB = new Truck(1.3F);
+        Auto truckA = new Truck(10);
+        Auto truckB = new Truck(5);
         ParkingManagement parkingManagement = new ParkingManagement(
                 List.of(
                         new TruckParking(2),
@@ -115,27 +116,9 @@ class ParkingManagementTest {
     }
 
     @Test
-    public void whenTwoTrucksGoToPassengerCar() {
-        Auto truckA = new Truck(1.7F);
-        Auto truckB = new Truck(1.3F);
-        ParkingManagement parkingManagement = new ParkingManagement(
-                List.of(
-                        new TruckParking(0),
-                        new ParkingForPassengerCars(3)
-                )
-        );
-        parkingManagement.manageParkingPlaces(truckA);
-        parkingManagement.manageParkingPlaces(truckB);
-        assertThat(parkingManagement.getParkingSpaces().get(TRUCK_PLACES).findBy(e -> true))
-                .isEqualTo(List.of());
-        assertThat(parkingManagement.getParkingSpaces().get(PASSENGER_CAR_PLACES).findBy(e -> true))
-                .isEqualTo(List.of(truckA, truckB));
-    }
-
-    @Test
     public void whenTwoTrucksGoToTruckPlaceAndOnePassengerCarGoToPassengerCarPlace() {
         Auto car = new PassengerCar();
-        Auto truck = new Truck(1.3F);
+        Auto truck = new Truck(2);
         ParkingManagement parkingManagement = new ParkingManagement(
                 List.of(
                         new TruckParking(1),
@@ -148,5 +131,12 @@ class ParkingManagementTest {
                 .isEqualTo(List.of(truck));
         assertThat(parkingManagement.getParkingSpaces().get(PASSENGER_CAR_PLACES).findBy(e -> true))
                 .isEqualTo(List.of(car));
+    }
+
+    @Test
+    public void whenIncorrectTruckSizeValue() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            Auto truck = new Truck(1);
+        });
     }
 }
