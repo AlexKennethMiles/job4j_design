@@ -12,8 +12,10 @@ public class SimpleMenu implements Menu {
         }
         if (Objects.equals(parentName, ROOT)) {
             return rootElements.add(new SimpleMenuItem(childName, actionDelegate));
-        } else if (findItem(parentName).isPresent()) {
-            return findItem(parentName).get().menuItem.getChildren().add(new SimpleMenuItem(childName, actionDelegate));
+        }
+        var item = findItem(parentName);
+        if (item.isPresent()) {
+            return item.get().menuItem.getChildren().add(new SimpleMenuItem(childName, actionDelegate));
         }
         return false;
     }
